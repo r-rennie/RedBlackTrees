@@ -128,4 +128,24 @@ public class RedBlackTree {
         }
         System.out.println();
     }
+
+    private void deleteNode(){
+        /*
+        Rules for coloring node:
+        1. Every node is colored either red or black
+        2. The root is black & every leaf (NULL) is black
+        3. If a node is red, the children must be black
+        4. Every path from a node to a
+        NULL pointer must contain the
+        same number of black nodes
+        Does the diagram fit
+        all 4 properties?
+
+        Cases:
+        1. Deleting Leaf node
+        2. Deleting node inside list
+        3. Deleting root node.
+
+         */
+    }
 }
