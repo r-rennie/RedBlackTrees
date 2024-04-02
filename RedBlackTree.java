@@ -129,41 +129,66 @@ public class RedBlackTree {
         System.out.println();
     }
 
+
+    /*
+    Rules for coloring node:
+    1. Every node is colored either red or black
+    2. The root is black & every leaf (NULL) is black
+    3. If a node is red, the children must be black
+    4. Every path from a node to a
+    NULL pointer must contain the
+    same number of black nodes
+    Does the diagram fit
+    all 4 properties?
+
+    Cases:
+    1. Deleting Leaf node (no children)
+    2. Node has one child (replace node with child)
+    3. Node has two children (Replace node with its in-order successor or the leftmost node in right subtree)
+    Delete successor like number 2
+    4. Restore properities and color changes with rotations
+
+    TODO How does one delete memory in java?
+    
+    */
+
+
+    /* DeleteNode: Deletes a node from the Red Black Tree
+     * @param RedBlackTreeNode z: the node to be deleted
+     */
     public void deleteNode(RedBlackTreeNode z){
-        // Case for Deleting Red Leaf Node
-        if (z.left == null && z.right == null && z.isRed == true){
-            // delete z;
-        }
-        // Case for Only One Child
-        else if (z.left == null || z.right == null){
-            if (z.parent.isRed == true || z.isRed == true){
-                //z.parent.parent =
+        //Case for deleting a leaf node 
+        if (z.left == null && z.right == null)
+        {
+            if (z.parent.left == z){
+                z.parent.left = null;
+            }
+            else if (z.parent.right == z){
+                z.parent.right = null;
             }
         }
+        // Case for Node with only one child
+        // TODO Finish case for node with only one child case deletion
+        
+        if (z.left == null || z.right == null){
+
+        }
+
+        //Case for Node with 2 children
+        if (z.left != null  && z.right != null){
+            //Find successor of node z to replace it with
+            RedBlackTreeNode successor = inOrderSuccesor(root, z);
+            z = successor;
+        }
+
         /*
-        Rules for coloring node:
-        1. Every node is colored either red or black
-        2. The root is black & every leaf (NULL) is black
-        3. If a node is red, the children must be black
-        4. Every path from a node to a
-        NULL pointer must contain the
-        same number of black nodes
-        Does the diagram fit
-        all 4 properties?
-
-        Cases:
-        1. Deleting Leaf node (no children)
-        2. Node has one child (replace node with child)
-        3. Node has two children (Replace node with its in-order successor or the leftmost node in right subtree)
-        Delete successor like number 2
-        4. Restore properities and color changes with rotations
-
-         TODO First create a function to find In-order successor and deletion from BST
-         TODO Then, use the function to do rotations/color swaps
+         * // TODO Here, you would fix the colors...
          */
-
+        
 
     }
+
+    //Methods below were utilized from GeeksForGeeks
 
     /*
     InOrderSuccesor: Find the successor in an in-order traversal (least-greatest value above given)
@@ -172,21 +197,29 @@ public class RedBlackTree {
     @return The succesor of node z
      */
     public RedBlackTreeNode inOrderSuccesor( RedBlackTreeNode root, RedBlackTreeNode z){
-        if (z.right != null && z.isRed == true){
-            //delete z;
-            return z;
+        if (z.right != null){
+            return minimumNode(z.right);
         }
-        return null;
+        RedBlackTreeNode p = z.parent;
+        while (p != null && z == p.right){
+            z = p;
+            p = p.parent;
+        }
+        return p;
     }
 
     /*
-    minimumNode
-
-
+    minimumNode: Finds the next, minimum, biggest node of a subtree
+    @param RedBlackTree z: the node that's minimum node would be found
+    @return RedBlackTree current: the node that's the minimum node of z
      */
     public RedBlackTreeNode minimumNode(RedBlackTreeNode z){
-        return z;
+        RedBlackTreeNode current = z;
+
+        while (current.left != null){
+            current = current.left; 
+        }
+        return current;
 
     }
-
 }
