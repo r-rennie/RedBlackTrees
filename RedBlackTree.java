@@ -129,7 +129,17 @@ public class RedBlackTree {
         System.out.println();
     }
 
-    private void deleteNode(){
+    public void deleteNode(RedBlackTreeNode z){
+        // Case for Deleting Red Leaf Node
+        if (z.left == null && z.right == null && z.isRed == true){
+            // delete z;
+        }
+        // Case for Only One Child
+        else if (z.left == null || z.right == null){
+            if (z.parent.isRed == true || z.isRed == true){
+                //z.parent.parent =
+            }
+        }
         /*
         Rules for coloring node:
         1. Every node is colored either red or black
@@ -142,10 +152,41 @@ public class RedBlackTree {
         all 4 properties?
 
         Cases:
-        1. Deleting Leaf node
-        2. Deleting node inside list
-        3. Deleting root node.
+        1. Deleting Leaf node (no children)
+        2. Node has one child (replace node with child)
+        3. Node has two children (Replace node with its in-order successor or the leftmost node in right subtree)
+        Delete successor like number 2
+        4. Restore properities and color changes with rotations
 
+         TODO First create a function to find In-order successor and deletion from BST
+         TODO Then, use the function to do rotations/color swaps
          */
+
+
     }
+
+    /*
+    InOrderSuccesor: Find the successor in an in-order traversal (least-greatest value above given)
+    @param RedBlackTreeNode root: The root of the Red-Black Tree
+    @param RedBlackTreeNode z: The node to find the succesor of
+    @return The succesor of node z
+     */
+    public RedBlackTreeNode inOrderSuccesor( RedBlackTreeNode root, RedBlackTreeNode z){
+        if (z.right != null && z.isRed == true){
+            //delete z;
+            return z;
+        }
+        return null;
+    }
+
+    /*
+    minimumNode
+
+
+     */
+    public RedBlackTreeNode minimumNode(RedBlackTreeNode z){
+        return z;
+
+    }
+
 }
