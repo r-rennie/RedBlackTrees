@@ -146,7 +146,7 @@ public class RedBlackTree {
     2. Node has one child (replace node with child)
     3. Node has two children (Replace node with its in-order successor or the leftmost node in right subtree)
     Delete successor like number 2
-    4. Restore properities and color changes with rotations
+    4. Restore properties and color changes with rotations
 
     TODO How does one delete memory in java?
     
@@ -169,22 +169,50 @@ public class RedBlackTree {
         }
         // Case for Node with only one child
         // TODO Finish case for node with only one child case deletion
-        
-        if (z.left == null || z.right == null){
-
+        else if (z.left == null || z.right == null){
+            if (z.left == null) {
+                z = z.right;
+                z.right = null;
+            }
+            if (z.right == null) {
+                z = z.left;
+                z.left = null;
+            }
         }
-
         //Case for Node with 2 children
-        if (z.left != null  && z.right != null){
+        else (z.left != null  && z.right != null){
             //Find successor of node z to replace it with
             RedBlackTreeNode successor = inOrderSuccesor(root, z);
             z = successor;
         }
 
-        /*
-         * // TODO Here, you would fix the colors...
-         */
+        updateColor(z);
         
+    }
+
+    public void updateColor(RedBlackTreeNode z) {
+        // Rules for coloring node:
+        // 1. Every node is colored either red or black
+        // 2. The root is black & every leaf (NULL) is black
+        // 3. If a node is red, the children must be black
+        // 4. Every path from a node to a
+        // NULL pointer must contain the
+        // same number of black nodes
+        // Does the diagram fit
+        // all 4 properties?
+
+        if (z == root) {
+            z.isRed = false;
+        }
+        if (z.parent == root) {
+            z.parent.isRed = false;
+        }
+        if (z.parent.isRed == true) {
+            z.isRed = false;
+        }
+        if (z == null) {
+            z.isRed = false;
+        }
 
     }
 
