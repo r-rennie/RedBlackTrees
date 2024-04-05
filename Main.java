@@ -23,6 +23,10 @@ public class Main {
         mytree.insert(30);
         mytree.deleteNode(54, mytree.getRoot());
         mytree.printTree();
+    
+        mytree.deleteNode(32, mytree.getRoot());
+
+        mytree.printTree();
         System.out.println("Root = " + mytree.getRoot().toString());
     }
 }

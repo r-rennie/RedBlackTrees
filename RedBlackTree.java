@@ -112,6 +112,10 @@ public class RedBlackTree {
     // Inorder traversal for printing
     private void inorderTraversal(RedBlackTreeNode node, List<Integer> result) {
         if (node != null) {
+            System.out.println("Data: " + node.data);
+            System.out.println("Is it Red: " + node.isRed);
+            System.out.println("Left child: " + node.left);
+            System.out.println("Right Child: " + node.data);
             inorderTraversal(node.left, result);
             result.add(node.data);
             inorderTraversal(node.right, result);
@@ -147,8 +151,6 @@ public class RedBlackTree {
     3. Node has two children (Replace node with its in-order successor or the leftmost node in right subtree)
     Delete successor like number 2
     4. Restore properties and color changes with rotations
-
-    TODO How does one delete memory in java?
     
     */
 
@@ -173,7 +175,6 @@ public class RedBlackTree {
      * @param data: the data (number) to be deleted from the tree
      */
 
-     //TODO The node doesn't actually delete, but it finds it correctly
     public void deleteNode(int data, RedBlackTreeNode root){
         
         //searches for node to delete
@@ -195,32 +196,50 @@ public class RedBlackTree {
         // Case for Node with only one child 
         // TODO: Fix for one child
         else if (z.left == null || z.right == null){
-            if (z.left == null) {
-                z = z.right;
-                z.right = null;
-            }
-            if (z.right == null) {
-                z = z.left;
-                z.left = null;
+            RedBlackTreeNode successor = inOrderSuccesor(root, z);
+            z.data = successor.data;
+            //if successor is leaf note
+            if (successor.left == null && successor.right == null){
+                if (successor.parent.left == successor){
+                    successor.parent.left = null;
+                }
+                else {
+                    successor.parent.right = null;
+                }
+             }
+             else if (successor.right != null) {
+                successor.parent = successor.right;
             }
         }
         //Case for Node with 2 children 
-        // TODO Fix for two children
         else if (z.left != null  && z.right != null){
             //Find successor of node z to replace it with
             RedBlackTreeNode successor = inOrderSuccesor(root, z);
-            z = successor;
+            System.out.println("Root: " + successor.data);
+
+            z.data = successor.data;
+
+            //if successor is leaf note
+            if (successor.left == null && successor.right == null){
+                if(successor.parent.left == successor){
+                    successor.parent.left = null;
+                }
+                else {
+                    successor.parent.right = null;
+                }
+
+            }
+            //if successor has a right child
+            else if (successor.right != null) {
+                successor.parent = successor.right;
+            }
+            
         }
         //Updates the color accordingly after deletion of the node
         updateColor(z);
     }
-    
-    /* updateColor: Updates the nodes whether they are black or red
-     * @param z: the node you're trying to fix
-     * TODO: updateColor method... could we use insertMethod instead?
-     */
-    public void updateColor(RedBlackTreeNode z) {
-        // Rules for coloring node:
+
+    // Rules for coloring node:
         // 1. Every node is colored either red or black
         // 2. The root is black & every leaf (NULL) is black
         // 3. If a node is red, the children must be black
@@ -229,23 +248,28 @@ public class RedBlackTree {
         // same number of black nodes
         // Does the diagram fit
         // all 4 properties?
+    
+    /* updateColor: Updates the nodes whether they are black or red
+     * @param z: the node you're trying to fix
+     * TODO: updateColor method... 
+     */
 
-        if (z == root) {
-            z.isRed = false;
+     public void updateColor(RedBlackTreeNode z){
+        if ((z.isRed == true) && (z.left.isRed == true || z.right.isRed)){
+            if (z.left.isRed == true){
+                z.left.isRed = false;
+            }
+            else {
+                z.right.isRed = false;
+            }
+            
         }
-        if (z.parent == root) {
-            z.parent.isRed = false;
-        }
-        if (z.parent.isRed == true) {
-            z.isRed = false;
-        }
-        if (z == null) {
-            z.isRed = false;
-        }
+     }
 
-    }
 
-    //Methods below were utilized from GeeksForGeeks
+
+    
+     //Methods below were utilized from GeeksForGeeks
 
     /*
     InOrderSuccesor: Find the successor in an in-order traversal (least-greatest value above given)
@@ -279,4 +303,5 @@ public class RedBlackTree {
         return current;
 
     }
+
 }
