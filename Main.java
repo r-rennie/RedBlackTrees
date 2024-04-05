@@ -21,6 +21,7 @@ public class Main {
         mytree.insert(32);
         mytree.insert(31);
         mytree.insert(30);
+        mytree.deleteNode(54, mytree.getRoot());
         mytree.printTree();
         System.out.println("Root = " + mytree.getRoot().toString());
     }

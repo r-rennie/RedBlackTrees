@@ -152,14 +152,39 @@ public class RedBlackTree {
     
     */
 
+    /* searchBST: Searches for the node containing the given data
+     * @param root: the root of the Red Black Tree
+     * @param data: the data the method must find in the Red Black Tree
+     * @return: the node where the data is found
+     */
+    public RedBlackTreeNode searchBST(RedBlackTreeNode root, int data) {
+        // Base Cases: root is null or key is present at root
+        if (root == null || root.data == data)
+            return root;
+        // Key is greater than root's key
+        if (root.data < data)
+            return searchBST(root.right, data);
+        // Key is smaller than root's key
+        return searchBST(root.left, data);
+    }
+
 
     /* DeleteNode: Deletes a node from the Red Black Tree
-     * @param RedBlackTreeNode z: the node to be deleted
+     * @param data: the data (number) to be deleted from the tree
      */
-    public void deleteNode(RedBlackTreeNode z){
+
+     //TODO The node doesn't actually delete, but it finds it correctly
+    public void deleteNode(int data, RedBlackTreeNode root){
+        
+        //searches for node to delete
+        RedBlackTreeNode z = searchBST(root, data);
+        System.out.println("The node you're trying to delete is: " + z.data);
+        System.out.println("The node's children are: " + z.left + " and " + z.right );
+
         //Case for deleting a leaf node 
         if (z.left == null && z.right == null)
         {
+            //Finds if leaf node is left or right child
             if (z.parent.left == z){
                 z.parent.left = null;
             }
@@ -167,8 +192,8 @@ public class RedBlackTree {
                 z.parent.right = null;
             }
         }
-        // Case for Node with only one child
-        // TODO Finish case for node with only one child case deletion
+        // Case for Node with only one child 
+        // TODO: Fix for one child
         else if (z.left == null || z.right == null){
             if (z.left == null) {
                 z = z.right;
@@ -179,17 +204,21 @@ public class RedBlackTree {
                 z.left = null;
             }
         }
-        //Case for Node with 2 children
-        else (z.left != null  && z.right != null){
+        //Case for Node with 2 children 
+        // TODO Fix for two children
+        else if (z.left != null  && z.right != null){
             //Find successor of node z to replace it with
             RedBlackTreeNode successor = inOrderSuccesor(root, z);
             z = successor;
         }
-
+        //Updates the color accordingly after deletion of the node
         updateColor(z);
-        
     }
-
+    
+    /* updateColor: Updates the nodes whether they are black or red
+     * @param z: the node you're trying to fix
+     * TODO: updateColor method... could we use insertMethod instead?
+     */
     public void updateColor(RedBlackTreeNode z) {
         // Rules for coloring node:
         // 1. Every node is colored either red or black
