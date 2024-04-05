@@ -4,21 +4,26 @@ import java.util.List;
 public class RedBlackTree {
     private RedBlackTreeNode root;
 
+    // constructor
     public RedBlackTree() {
         root = null;
     }
 
+    // getter
     public RedBlackTreeNode getRoot() {
         return root;
     }
 
     // Left Rotation
+    // param: the node being checked
     private void leftRotate(RedBlackTreeNode x) {
         RedBlackTreeNode y = x.right;
         x.right = y.left;
+        // of there's no left node
         if (y.left != null)
             y.left.parent = x;
         y.parent = x.parent;
+        // identifies root node
         if (x.parent == null)
             root = y;
         else if (x == x.parent.left)
@@ -30,12 +35,15 @@ public class RedBlackTree {
     }
 
     // Right Rotation
+    // param: the node being checked
     private void rightRotate(RedBlackTreeNode x) {
         RedBlackTreeNode y = x.left;
         x.left = y.right;
+        // if there's no right node
         if (y.right != null)
             y.right.parent = x;
         y.parent = x.parent;
+        // identifies the root
         if (x.parent == null)
             root = y;
         else if (x == x.parent.right)
@@ -46,7 +54,8 @@ public class RedBlackTree {
         x.parent = y;
     }
 
-    // Fix violation of Red-Black Tree properties after insertion
+    // Fixes the violation of Red-Black Tree properties after insertion
+    // param: the node being checked
     private void insertFixup(RedBlackTreeNode z) {
         while (z != root && z.parent.isRed) {
             if (z.parent == z.parent.parent.left) {
@@ -87,10 +96,12 @@ public class RedBlackTree {
     }
 
     // Insertion
+    // param: the data
     public void insert(int data) {
         RedBlackTreeNode newNode = new RedBlackTreeNode(data);
         RedBlackTreeNode y = null;
         RedBlackTreeNode x = root;
+        // while root is not empty
         while (x != null) {
             y = x;
             if (newNode.data < x.data)
@@ -110,6 +121,7 @@ public class RedBlackTree {
     }
 
     // Inorder traversal for printing
+    // param: the node being checked and the result as a list of ints
     private void inorderTraversal(RedBlackTreeNode node, List<Integer> result) {
         if (node != null) {
             System.out.println("Data: " + node.data);
